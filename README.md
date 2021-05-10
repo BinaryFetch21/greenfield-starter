@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Abir Azaiz
+  - __Scrum Master__: Ahmed Gharbi
+  - __Development Team Members__: Mohamed Haouari
 
 ## Table of Contents
 
