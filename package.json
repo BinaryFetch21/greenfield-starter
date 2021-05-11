@@ -4,6 +4,9 @@
   "description": "e-com website",
   "author": "binarysearch21",
   "license": "ISC",
+  "node": {
+    "__dirname": false
+  },
   "scripts": {
     "server-dev": "nodemon Server/index.js",
     "react-dev": "webpack --watch"

@@ -115,12 +115,12 @@ export default function PrimarySearchAppBar() {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >    
-    <Link href={"/signin"}>
-      <MenuItem onClick={handleMenuClose}>SignIn</MenuItem>
-    </Link>
+    >
+      <Link href={"/signin"}>
+        <MenuItem onClick={handleMenuClose}>SignIn</MenuItem>
+      </Link>
     </Menu>
-  );
+  );  
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (

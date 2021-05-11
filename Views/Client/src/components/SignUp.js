@@ -60,16 +60,16 @@ export default function SignUp() {
           Sign up
         </Typography>
         <form className={classes.form} noValidate>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="uesername"
-                label="Username"
-                name="username"
-                autoComplete="username"
-              />
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="uesername"
+              label="Username"
+              name="username"
+              autoComplete="username"
+            />
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -101,6 +101,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
+            id="btn-reg"
             type="submit"
             fullWidth
             variant="contained"
@@ -111,7 +112,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

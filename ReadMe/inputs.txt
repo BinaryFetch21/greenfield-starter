@@ -1,0 +1,12 @@
+//? register 
+<!-- ID -->
+-username: uesername
+-Email: email
+-password: password
+-Button: btn-reg
+
+//! login 
+<!-- ID -->
+-Email: email
+-password: password
+-Button: btn-submit
