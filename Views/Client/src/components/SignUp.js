@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,8 +10,10 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
+import regeneratorRuntime from "regenerator-runtime";
 
 function Copyright() {
   return (
@@ -26,7 +28,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -44,11 +46,46 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
-export default function SignUp() {
-  const classes = useStyles();
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      email: "",
+      password: "",
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
+  handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.name === "username") {
+      this.setState({username: e.target.value});
+    }
+    if (e.target.name === "email") {
+      this.setState({email: e.target.value});
+    }
+    if (e.target.name === "password") {
+      this.setState({password: e.target.value});
+    }
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:3000/signup");
+      console.log(res);
+      res.redirects("/signin");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  render() {
+  const { classes } = this.props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -62,6 +99,7 @@ export default function SignUp() {
         <form className={classes.form} noValidate>
           <Grid item xs={12}>
             <TextField
+              onChange={this.handleChange}
               variant="outlined"
               required
               fullWidth
@@ -72,6 +110,7 @@ export default function SignUp() {
             />
             <Grid item xs={12}>
               <TextField
+                onChange={this.handleChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -83,6 +122,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={this.handleChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -101,6 +141,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
+            onClick={this.handleSubmit}
             id="btn-reg"
             type="submit"
             fullWidth
@@ -125,3 +166,6 @@ export default function SignUp() {
     </Container>
   );
 }
+}
+
+export default withStyles(styles, { withTheme: true })(SignUp);

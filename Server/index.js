@@ -2,23 +2,29 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const db = require("../DB/index");
-const Product = require("../Db/Models/Product");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const usersRouter = require("../Server/Controllers/userRoute");
+const productsRouter = require("../Server/Controllers/productRoute");
+const signin = require("./Controllers/signin");
+const signup = require("./Controllers/signup");
 
-const port = 3000;-
+const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "../Views/Client/public")));
 
-app.get("/products", async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.send(products);
-  } catch (err) {
-    console.log(err);
-  }
-});
+app.use(cors());
+dotenv.config();
+
+app.use("/signin", signin);
+app.use("/signup", signup);
+app.use("/users", usersRouter);
+app.use("/products", productsRouter);
+
 
 app.get("*", (req, res) => {
   res.sendFile("index.html", {

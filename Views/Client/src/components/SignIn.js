@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,8 +10,10 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
+import regeneratorRuntime from "regenerator-runtime";
 
 function Copyright() {
   return (
@@ -26,7 +28,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const styles = ((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -46,9 +48,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-  const classes = useStyles();
+class SignIn extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
+  handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.name === "email") {
+      this.setState({email: e.target.value});
+    }
+    if (e.target.name === "password") {
+      this.setState({ password: e.target.value });
+    }
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:3000/signin", formdata);
+      console.log(res);
+      res.redirects("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  render() {
+  const { classes } = this.props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -61,6 +94,7 @@ export default function SignIn() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            onChange={this.handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -72,6 +106,7 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
+            onChange={this.handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -87,6 +122,7 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
+            onClick={this.handleSubmit}
             id="btn-submit"
             type="submit"
             fullWidth
@@ -116,3 +152,6 @@ export default function SignIn() {
     </Container>
   );
 }
+}
+
+export default withStyles(styles, { withTheme: true })(SignIn);

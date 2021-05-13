@@ -13,6 +13,7 @@ export default class UI extends Component {
       productData: [],
     };
   }
+
   componentDidMount() {
     axios
       .get("/products")
@@ -35,7 +36,7 @@ export default class UI extends Component {
           <Slide />
         </div>
         <div className="card">
-          {this.props.productData.map((product) => {
+          {this.state.productData.map((product) => {
             return <Card product={product} key={product._id} />;
           })}
         </div>
