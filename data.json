@@ -1,30 +1,37 @@
 [
   {
-    "image":"https://images.footlocker.com/is/image/FLEU/314102669604_01?wid=630&hei=630&fmt=png-alpha",
-    "name":"Jordan 1 Mid",
-    "price":"€ 129,99",
-    "brand":"jordan",
-    "description":"White-Arctic Orange-Black."
-  },
-  {
     "image":"https://images.footlocker.com/is/image/FLEU/314102813004_01?wid=630&hei=630&fmt=png-alpha",
     "name":"Nike Kyrie 7",
-    "price":"€ 129,99",
+    "price":"129,99",
     "brand":"nike",
     "description":"Pale Ivory-Chlorine Blue-Back."
   },
   {
     "image":"https://images.footlocker.com/is/image/FLEU/314208679804_01?wid=630&hei=630&fmt=png-alpha",
     "name":"adidas ZX 8000 x Lego",
-    "price":"€ 139,99",
+    "price":"139,99",
     "brand":"adidas",
     "description":"Red-Red-White."
   },
   {
+    "image":"https://images.footlocker.com/is/image/FLEU/314102669604_01?wid=630&hei=630&fmt=png-alpha",
+    "name":"Jordan 1 Mid",
+    "price":"129,99",
+    "brand":"jordan",
+    "description":"White-Arctic Orange-Black."
+  },
+  {
     "image":"https://images.footlocker.com/is/image/FLEU/315240595702_01?wid=630&hei=630&fmt=png-alpha",
     "name":"Puma Cruise Rider",
-    "price":"€ 99,99",
+    "price":"99,99",
     "brand":"puma",
     "description":"Black-White-Soft Fluo Orange."
+  },
+  {
+    "image":"https://images.footlocker.com/is/image/FLEU/315345646202_01?wid=630&hei=630&fmt=png-alpha",
+    "name":"Nike Blazer Low",
+    "price":"89,99",
+    "brand":"nike",
+    "description":"White-White-White."
   }
 ]

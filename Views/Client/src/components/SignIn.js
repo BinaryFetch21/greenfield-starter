@@ -72,7 +72,7 @@ class SignIn extends Component{
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/signin", formdata);
+      const res = await axios.post("http://localhost:3000/signin");
       console.log(res);
       res.redirects("/");
     } catch (error) {

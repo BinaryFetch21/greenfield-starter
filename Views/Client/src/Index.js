@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import UI from "./indexui.js";
 import SignIn from "./components/SignIn.js";
 import SignUp from "./components/SignUp.js";
+import Cart from "./components/Cart.js";
 
 export default class Index extends Component {
   render() {
@@ -19,6 +20,9 @@ export default class Index extends Component {
             </Route>
             <Route path="/">
               <UI />
+            </Route>
+            <Route path="/cart">
+              <Cart />
             </Route>
           </Switch>
         </BrowserRouter>

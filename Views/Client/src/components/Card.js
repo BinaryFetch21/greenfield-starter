@@ -52,7 +52,7 @@ class CardDetails extends Component {
               </IconButton>
               {this.props.product.description}
             </Typography>
-            <CardHeader title={this.props.product.price} />
+            <CardHeader title={`€ ${this.props.product.price}`} />
           </CardContent>
         </Card>
       </div>
