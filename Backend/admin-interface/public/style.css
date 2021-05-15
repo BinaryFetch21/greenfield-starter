@@ -3,7 +3,14 @@ li {
   }
   
   button{
-    background-color: rgb(185, 185, 185);
+    background-color: #f50057;
+    color: white;
+    width: 220px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+    font-size:16px;
   }
   
   .container {

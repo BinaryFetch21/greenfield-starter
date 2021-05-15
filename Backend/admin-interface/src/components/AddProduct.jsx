@@ -1,5 +1,34 @@
 import React from "react";
 import axios from "axios";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Button from "@material-ui/core/Button";
+import SendIcon from "@material-ui/icons/Send";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+const styles = (theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+});
 
 class AddProduct extends React.Component {
   constructor(props) {
@@ -9,7 +38,8 @@ class AddProduct extends React.Component {
       name: this.props.prodToUpdate.name || "",
       price: this.props.prodToUpdate.price || "",
       image: this.props.prodToUpdate.image || "",
-      brand: this.props.prodToUpdate.brand || ""
+      description: this.props.prodToUpdate.description || "",
+      brand: this.props.prodToUpdate.brand || "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,61 +74,92 @@ class AddProduct extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="lend-container">
-        <h4>Add / Update Product</h4>
-        <div className="lend-card">
-          <form>
-            <div className="flex">
-              <div className="input-group">
-                <label htmlFor="name">Name</label>
-                <input
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Add / Update Product
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="name"
                   name="name"
-                  className="small-input"
-                  type="text"
+                  variant="outlined"
+                  required
+                  fullWidth
                   onChange={this.handleChange}
                   value={this.state.name}
+                  label="Name"
+                  autoFocus
                 />
-              </div>
-              <div className="input-group">
-                <label htmlFor="price">Price</label>
-                <input
-                  name="price"
-                  className="small-input"
-                  type="text"
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   onChange={this.handleChange}
                   value={this.state.price}
+                  label="Price"
+                  name="price"
+                  autoComplete="price"
                 />
-              </div>
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="image">Image</label>
-              <input
-                name="image"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.image}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="brand">Brand</label>
-              <input
-                name="brand"
-                type="text"
-                rows="4"
-                onChange={this.handleChange}
-                value={this.state.brand}
-              />
-            </div>
-            <button className="right" onClick={this.handleSubmit.bind(this)}>
-              Validate
-            </button>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="description"
+                  label="Description"
+                  onChange={this.handleChange}
+                  value={this.state.description}
+                  autoComplete="description"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onChange={this.handleChange}
+                  value={this.state.image}
+                  label="Image"
+                  name="image"
+                  autoComplete="image"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="brand"
+                  label="Brand"
+                  onChange={this.handleChange}
+                  value={this.state.brand}
+                  autoComplete="brand"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              onClick={this.handleSubmit.bind(this)}
+              fullWidth
+              variant="contained"
+              color="secondary"
+              endIcon={<SendIcon />}
+              className={classes.submit}
+            >
+              Send
+            </Button>
           </form>
         </div>
-      </div>
+      </Container>
     );
   }
 }
 
-export default AddProduct;
+export default withStyles(styles, { withTheme: true })(AddProduct);

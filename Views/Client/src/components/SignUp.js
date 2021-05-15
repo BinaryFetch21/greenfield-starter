@@ -108,17 +108,19 @@ class SignUp extends Component {
               noValidate
               onSubmit={this.handleSubmit}
             >
-              <Grid item xs={12}>
-                <TextField
-                  onChange={this.handleChange}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="uesername"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={this.handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="uesername"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     onChange={this.handleChange}
@@ -142,14 +144,6 @@ class SignUp extends Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
                   />
                 </Grid>
               </Grid>
