@@ -10,11 +10,13 @@ router.post("/", async (req, res) => {
   }
   const user = await Users.findOne({ email: req.body.email });
   if (!user) {
-    return res.status(400).send("Email is wrong");
+    res.status(400).send("Email is wrong");
+    alert("Email is wrong");
   }
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) {
-    return res.status(400).send("Password is wrong");
+    res.status(400).send("Password is wrong");
+    alert("Password is wrong");
   }
   res.send("Logged In");
 });

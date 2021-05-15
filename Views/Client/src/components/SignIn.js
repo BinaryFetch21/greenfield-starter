@@ -14,6 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import regeneratorRuntime from "regenerator-runtime";
+import { Redirect } from "react-router";
 
 function Copyright() {
   return (
@@ -28,7 +29,7 @@ function Copyright() {
   );
 }
 
-const styles = ((theme) => ({
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -46,112 +47,127 @@ const styles = ((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
-class SignIn extends Component{
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
-    }
+      redirect: false,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = (e) => {
-    e.preventDefault();
-    if (e.target.name === "email") {
-      this.setState({email: e.target.value});
-    }
-    if (e.target.name === "password") {
-      this.setState({ password: e.target.value });
-    }
-  };
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
 
-  handleSubmit = async (e) => {
+  handleSubmit(e) {
     e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:3000/signin");
-      console.log(res);
-      res.redirects("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const loginData = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    axios("http://localhost:3000/signin", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      data: loginData,
+    })
+      .then((res) => {
+        this.setState({ redirect: true });
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   render() {
-  const { classes } = this.props;
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            onChange={this.handleChange}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            onChange={this.handleChange}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            onClick={this.handleSubmit}
-            id="btn-submit"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-}
+    const { classes } = this.props;
+    if (!this.state.redirect) {
+      return (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleSubmit}
+            >
+              <TextField
+                onChange={this.handleChange}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                onChange={this.handleChange}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                onClick={this.handleSubmit}
+                id="btn-submit"
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      );
+    }
+    return <Redirect to="/products" />;
+  }
 }
 
 export default withStyles(styles, { withTheme: true })(SignIn);

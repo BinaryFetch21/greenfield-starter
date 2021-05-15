@@ -34,6 +34,7 @@ class CardDetails extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const { classes } = this.props;
     return (
@@ -47,7 +48,8 @@ class CardDetails extends Component {
           <CardContent>
             <CardHeader title={this.props.product.name} />
             <Typography variant="body2" color="textSecondary" component="p">
-              <IconButton aria-label="add to favorites">
+              {/* add btn  */}
+              <IconButton aria-label="add to favorites" /*onClick={}*/ >
                 <FavoriteIcon />
               </IconButton>
               {this.props.product.description}

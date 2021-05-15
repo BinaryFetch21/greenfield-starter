@@ -14,6 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import regeneratorRuntime from "regenerator-runtime";
+import { Redirect } from "react-router";
 
 function Copyright() {
   return (
@@ -55,117 +56,131 @@ class SignUp extends Component {
       username: "",
       email: "",
       password: "",
-    }
+      redirect: false,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleChange = (e) => {
-    e.preventDefault();
-    if (e.target.name === "username") {
-      this.setState({username: e.target.value});
-    }
-    if (e.target.name === "email") {
-      this.setState({email: e.target.value});
-    }
-    if (e.target.name === "password") {
-      this.setState({password: e.target.value});
-    }
-  };
-
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:3000/signup");
-      console.log(res);
-      res.redirects("/signin");
-    } catch (error) {
-      console.log(error);
-    }
-  };
   
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const loginData = {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+    };
+    axios("http://localhost:3000/signup", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      data: loginData,
+    })
+      .then((res) => {
+        this.setState({ redirect: true });
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
   render() {
-  const { classes } = this.props;
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid item xs={12}>
-            <TextField
-              onChange={this.handleChange}
-              variant="outlined"
-              required
-              fullWidth
-              id="uesername"
-              label="Username"
-              name="username"
-              autoComplete="username"
-            />
-            <Grid item xs={12}>
-              <TextField
-                onChange={this.handleChange}
-                variant="outlined"
-                required
+    const { classes } = this.props;
+    if (!this.state.redirect) {
+      return (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleSubmit}
+            >
+              <Grid item xs={12}>
+                <TextField
+                  onChange={this.handleChange}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="uesername"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                />
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={this.handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={this.handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox value="allowExtraEmails" color="primary" />
+                    }
+                    label="I want to receive inspiration, marketing promotions and updates via email."
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                onClick={this.handleSubmit}
+                id="btn-reg"
+                type="submit"
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                onChange={this.handleChange}
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
-          </Grid>
-          <Button
-            onClick={this.handleSubmit}
-            id="btn-reg"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-}
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Link href="/signin" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+          <Box mt={5}>
+            <Copyright />
+          </Box>
+        </Container>
+      );
+    }
+    return <Redirect to="/signin" />;
+  }
 }
 
 export default withStyles(styles, { withTheme: true })(SignUp);

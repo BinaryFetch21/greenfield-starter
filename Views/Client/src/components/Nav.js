@@ -116,9 +116,16 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link href={"/signin"}>
-        <MenuItem onClick={handleMenuClose}>SignIn</MenuItem>
-      </Link>
+      {location.pathname === "/" && (
+        <Link href={"/signin"}>
+          <MenuItem onClick={handleMenuClose}>Sign-In</MenuItem>
+        </Link>
+      )}
+      {location.pathname === "/products" && (
+        <Link href={"/"}>
+          <MenuItem onClick={handleMenuClose}>Log-Out</MenuItem>
+        </Link>
+      )}
     </Menu>
   );  
 
@@ -133,22 +140,16 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+    {location.pathname === "/products" && (
       <MenuItem>
-        <IconButton aria-label="show 0 new items" color="inherit">
+        <IconButton aria-label="show 0 new items" color="inherit" href="/cart">
           <Badge badgeContent={0} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>My Cart</p>
       </MenuItem>
-      <MenuItem className="item-back">
-        <IconButton aria-label="show 1 new notifications" color="inherit">
-          <Badge badgeContent={1} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      )}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -193,11 +194,13 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 0 new items" color="inherit">
+            {location.pathname === "/products" && (
+              <IconButton aria-label="show 0 new items" color="inherit" href="/cart">
               <Badge badgeContent={0} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
+            )}
             <IconButton
               edge="end"
               aria-label="account of current user"

@@ -12,6 +12,9 @@ export default class Index extends Component {
       <div>
         <BrowserRouter>
           <Switch>
+            <Route path="/cart">
+              <Cart />
+            </Route>
             <Route path="/signin">
               <SignIn />
             </Route>
@@ -20,9 +23,6 @@ export default class Index extends Component {
             </Route>
             <Route path="/">
               <UI />
-            </Route>
-            <Route path="/cart">
-              <Cart />
             </Route>
           </Switch>
         </BrowserRouter>
