@@ -7,8 +7,11 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const usersRouter = require("../Server/Controllers/userRoute");
 const productsRouter = require("../Server/Controllers/productRoute");
+const ordersRouter = require("../Server/Controllers/orderRoute")
 const signin = require("./Controllers/signin");
 const signup = require("./Controllers/signup");
+
+
 
 const port = 3000;
 
@@ -24,7 +27,7 @@ app.use("/signin", signin);
 app.use("/signup", signup);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
-
+app.use("/orders", ordersRouter);
 
 app.get("*", (req, res) => {
   res.sendFile("index.html", {

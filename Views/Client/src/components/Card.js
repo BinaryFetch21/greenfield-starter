@@ -7,6 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from "@material-ui/core/styles";
+import axios from "axios";
+
+import Cart from "./Cart";
 
 const styles = (theme) => ({
   root: {
@@ -33,7 +36,36 @@ const styles = (theme) => ({
 class CardDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      orders : [],
+    };
+
+
+    // handleChange = this.state.handleChange.bind(this);
   }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  } 
+
+  addCart(order) {
+    this.setState({ orders: [...this.state.orders, order] });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    axios
+        .post("/orders", this.state)
+        .then(({ data }) => {
+          console.log(data);
+          this.props.setState({ orders: [...this.state.orders, data] });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+
 
   render() {
     const { classes } = this.props;
@@ -43,13 +75,14 @@ class CardDetails extends Component {
           <CardMedia
             className={classes.media}
             image={this.props.product.image}
+            onChange={this.handleChange}
             title={this.props.product.name}
           />
           <CardContent>
-            <CardHeader title={this.props.product.name} />
+            <CardHeader title={this.props.product.name} onChange={this.handleChange} />
             <Typography variant="body2" color="textSecondary" component="p">
               {/* add btn  */}
-              <IconButton aria-label="add to favorites" /*onClick={}*/ >
+              <IconButton aria-label="add to favorites" onClick={this.handleSubmit.bind(this)} >
                 <FavoriteIcon />
               </IconButton>
               {this.props.product.description}
