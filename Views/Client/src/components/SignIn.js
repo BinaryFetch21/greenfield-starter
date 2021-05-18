@@ -166,7 +166,7 @@ class SignIn extends Component {
         </Container>
       );
     }
-    return <Redirect to="/products" />;
+    return <Redirect to="/product" />;
   }
 }
 

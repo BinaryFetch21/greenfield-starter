@@ -58,3 +58,9 @@ li {
   .right {
     float: right;
   }
+
+  .cart-item {
+  width: 400px;
+  height: 475px;
+  margin-top: 10px;
+}

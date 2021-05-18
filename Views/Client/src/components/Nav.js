@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,7 +15,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -117,12 +118,17 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {location.pathname === "/" && (
-        <Link href={"/signin"}>
+        <Link to={"/signin"}>
           <MenuItem onClick={handleMenuClose}>Sign-In</MenuItem>
         </Link>
       )}
-      {location.pathname === "/products" && (
-        <Link href={"/"}>
+      {(location.pathname === "/product" || location.pathname === "/cart") && (
+        <Link to={"/product"}>
+          <MenuItem onClick={handleMenuClose}>Home</MenuItem>
+        </Link>
+      )}
+      {(location.pathname === "/product" || location.pathname === "/cart") && (
+        <Link to={"/signin"}>
           <MenuItem onClick={handleMenuClose}>Log-Out</MenuItem>
         </Link>
       )}
@@ -140,15 +146,19 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-    {location.pathname === "/products" && (
-      <MenuItem>
-        <IconButton aria-label="show 0 new items" color="inherit" href="/cart">
-          <Badge badgeContent={0} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>My Cart</p>
-      </MenuItem>
+      {(location.pathname === "/product" || location.pathname === "/cart") && (
+        <MenuItem>
+          <IconButton
+            aria-label="show 0 new items"
+            color="inherit"
+            to="/cart"
+          >
+            <Badge badgeContent={0} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <Link to="/cart">My Cart</Link>
+        </MenuItem>
       )}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -159,7 +169,7 @@ export default function PrimarySearchAppBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Link to="#">Profile</Link>
       </MenuItem>
     </Menu>
   );
@@ -194,12 +204,17 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {location.pathname === "/products" && (
-              <IconButton aria-label="show 0 new items" color="inherit" href="/cart">
-              <Badge badgeContent={0} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            {(location.pathname === "/product" ||
+              location.pathname === "/cart") && (
+              <IconButton
+                aria-label="show 0 new items"
+                color="inherit"
+                href="/cart"
+              >
+                <Badge badgeContent={0} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
             )}
             <IconButton
               edge="end"

@@ -1,20 +1,65 @@
 import React from "react";
+import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-var CartItem = (props) => (
-  <div>
-    <div>
-      <img src={props.order.image} />
-      
-        <h4>
-          <b>{props.order.name}</b>
-          <br />
-          <span>{props.order.price}</span>
-          <p>{props.order.brand}</p>
-        </h4>
-    </div>
-    <button onClick={() => props.deleteProd(props.order._id)}>Delete</button>
-    <button onClick={() => props.setProductToUpdate(props.order)}>Update</button>
-  </div>
-);
+const styles = (theme) => ({
+  media: {
+    height: 260,
+  },
+  cardContent: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  cartActions: {
+    justifyContent: "space-between",
+  },
+  buttons: {
+    display: "flex",
+    alignItems: "center",
+  },
+  typography: {
+    fontSize: 12,
+  },
+});
 
-export default CartItem;
+class CartItem extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Card className="cart-item">
+        <CardMedia
+          image={this.props.order.image}
+          alt={this.props.order.name}
+          className={classes.media}
+        />
+        <CardContent className={classes.cardContent}>
+          <Typography variant="h6">
+            {this.props.order.name}
+            <Typography variant="body1">
+              {`€ ${this.props.order.price}`}
+              <Typography variant="body1">{`Brand: ${this.props.order.brand}`}</Typography>
+            </Typography>
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Button
+            variant="contained"
+            type="button"
+            color="secondary"
+            startIcon={<DeleteIcon />}
+            onClick={() => this.props.deleteOrder(this.props.order._id)}
+          >
+            Remove
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+};
+
+export default withStyles(styles, { withTheme: true })(CartItem);

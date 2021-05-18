@@ -18,6 +18,8 @@ router.post("/", async (req, res) => {
     res.status(400).send("Password is wrong");
     alert("Password is wrong");
   }
+  console.log('hiiiiii', user._id);
+  res.cookie("id", user._id);
   res.send("Logged In");
 });
 

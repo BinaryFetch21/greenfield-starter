@@ -7,6 +7,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 const styles = (theme) => ({
   media: {
     height: 260,
+    width: 260,
   },
   cardContent: {
     display: "flex",

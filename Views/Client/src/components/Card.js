@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-
-import Cart from "./Cart";
 
 const styles = (theme) => ({
   root: {
@@ -18,7 +16,7 @@ const styles = (theme) => ({
   media: {
     height: 172.77,
     width: 307.14,
-    paddingTop: "56.25%", // 16:9
+    // paddingTop: "56.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -32,40 +30,40 @@ const styles = (theme) => ({
   },
 });
 
-
 class CardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders : [],
+      orders: [],
     };
-
-
-    // handleChange = this.state.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-  } 
-
-  addCart(order) {
-    this.setState({ orders: [...this.state.orders, order] });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  addCart(order) {
+    this.setState({ orders: order });
+  }
+
+  handleSubmit(product) {
+    // e.preventDefault();
     axios
-        .post("/orders", this.state)
-        .then(({ data }) => {
-          console.log(data);
-          this.props.setState({ orders: [...this.state.orders, data] });
-        })
-        .catch((error) => {
-          console.log(error);
+    .post("/orders", { product })
+    .then(({ data }) => {
+      console.log("prod", data);
+        var newOrder = this.state.orders
+        newOrder.push(data[0].product);
+        this.setState({
+          orders: newOrder,
         });
-    }
-
-
+        console.log(this.state.orders);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   render() {
     const { classes } = this.props;
@@ -79,10 +77,20 @@ class CardDetails extends Component {
             title={this.props.product.name}
           />
           <CardContent>
-            <CardHeader title={this.props.product.name} onChange={this.handleChange} />
-            <Typography variant="body2" color="textSecondary" component="p">
-              {/* add btn  */}
-              <IconButton aria-label="add to favorites" onClick={this.handleSubmit.bind(this)} >
+            <CardHeader
+              title={this.props.product.name}
+              onChange={this.handleChange}
+            />
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              data={this.props.product}
+              onClick={() => {
+                this.handleSubmit(this.props.product._id);
+              }}
+            >
+              <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>
               {this.props.product.description}
@@ -93,6 +101,6 @@ class CardDetails extends Component {
       </div>
     );
   }
-};
+}
 
 export default withStyles(styles, { withTheme: true })(CardDetails);

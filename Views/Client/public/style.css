@@ -11,7 +11,18 @@
   width: 100%;
 }
 
+.btns {
+  float: right;
+  margin-top: 25px;
+}
+
+.cart-item {
+  width: 260px;
+  margin-top: 10px;
+}
+
 .card {
+  margin-top: 15px;
   display: flex;
   justify-content: space-around;
   align-content: space-around;
@@ -29,7 +40,6 @@
 .footer {
   flex-shrink: 0;
   text-align: center;
-  margin-top: 40px;
   height: 5vh;
   background-color: #3f51b5;
   color: white;

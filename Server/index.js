@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const app = express();
 const path = require("path");
 const db = require("../DB/index");
@@ -17,11 +18,13 @@ const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "../Views/Client/public")));
 
 app.use(cors());
 dotenv.config();
+
 
 app.use("/signin", signin);
 app.use("/signup", signup);
